@@ -18,6 +18,7 @@ public class LexerRunner {
 		for (Token t; (t = l.read()) != Token.EOF;) {
 			System.out.println("=> " + t.getText());
 		}
+		
 	}
 
 }
