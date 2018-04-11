@@ -1,7 +1,12 @@
 package stone.env;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.nio.charset.Charset;
+
 import stone.BasicParser;
-import stone.CodeDialog;
 import stone.Lexer;
 import stone.ParseException;
 import stone.Token;
@@ -15,7 +20,15 @@ public class BasicInterpreter {
 	}
 
 	private static void run(BasicParser basicParser, BasicEnv basicEnv) throws ParseException {
-		Lexer lexer = new Lexer(new CodeDialog());
+		InputStream in = null;
+		try {
+			in = new FileInputStream("/home/chenyao/eclipse-workspace/stone/src/test/test.txt");
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		InputStreamReader reader = new InputStreamReader(in, Charset.forName("utf-8"));
+		Lexer lexer = new Lexer(reader);
 		while(lexer.peek(0) != Token.EOF) {
 			ASTree t = basicParser.parse(lexer);
 			if(!(t instanceof NullStmnt)) {
